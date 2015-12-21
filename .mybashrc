@@ -30,3 +30,6 @@ alias vimm='vim'
 
 # More aliases
 alias root='root -l'
+
+# Add ~/bin to $PATH
+PATH=$PATH:~/bin
