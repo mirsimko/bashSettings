@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh -Y -A simkomir@pdsf.nersc.gov
