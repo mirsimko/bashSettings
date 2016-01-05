@@ -6,7 +6,8 @@ Settings of aliases, vim, etc.
 ```
 $ git clone https://github.com/mirsimko/bashSettings.git
 ```
-Copy .vimrc and .vim to the home directory|
+Copy .vimrc and .vim to the home directory
+
 in your home run:
 ```
 $ cd .vim
