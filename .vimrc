@@ -160,7 +160,7 @@ nmap <silent> <C-N> :nohl<CR>
 
 "markdown highlight options
 let g:vim_markdown_folding_disabled=1
-"" let g:vim_markdown_math=1 " for latex math
+" let g:vim_markdown_math=1 " for latex math
 
 " spell checking for certain file extensions
 autocmd BufRead,BufNewFile *.tex,*.txt,*.html,*.yml,*.md setlocal spell
@@ -173,3 +173,7 @@ autocmd Syntax cpp call EnhanceCppSyntax()
 
 " C++11 Syntastic support
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
