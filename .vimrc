@@ -30,6 +30,9 @@ Plugin 'file-line'
 Plugin 'grep.vim'
 Plugin 'Tabular'
 Plugin 'Lokaltog/vim-powerline'
+Plugin 'Solarized' " color-scheme
+Plugin 'airblade/vim-gitgutter'
+
 
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
