@@ -162,6 +162,12 @@ nmap <silent> <C-N> :nohl<CR>
 let g:vim_markdown_folding_disabled=1
 " let g:vim_markdown_math=1 " for latex math
 
+set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
+let g:Powerline_symbols = 'unicode'
+
+autocmd QuickFixCmdPost *grep* cwindow
+au FileType python  set tabstop=4 shiftwidth=4 textwidth=140 softtabstop=4
+
 " spell checking for certain file extensions
 autocmd BufRead,BufNewFile *.tex,*.txt,*.html,*.yml,*.md setlocal spell
 " Add highlighting for function definition in C++
@@ -182,3 +188,8 @@ au Syntax * RainbowParenthesesLoadBraces
 let mapleader=','
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
+
+" Solarized options
+syntax enable
+set background=dark
+colorscheme solarized
