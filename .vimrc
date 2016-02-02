@@ -173,3 +173,8 @@ autocmd Syntax cpp call EnhanceCppSyntax()
 
 " C++11 Syntastic support
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+
+" Comment
+let mapleader=','
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
