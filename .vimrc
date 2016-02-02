@@ -18,9 +18,21 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-rails.git'
-Plugin 'scrooloose/nerdtree'
+Plugin 'The-NERD-tree'
 Plugin 'tpope/vim-surround'
+Plugin 'vimlatex'
+Plugin 'OmniCppComplete'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'Syntastic'
+Plugin 'tComment'
+Plugin 'rainbow_parentheses.vim'
+Plugin 'file-line'
+Plugin 'grep.vim'
+Plugin 'Tabular'
+Plugin 'Lokaltog/vim-powerline'
 
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
 
 Plugin 'a.vim'
 " The sparkup vim script is in a subdirectory of this repo called vim.
