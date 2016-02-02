@@ -157,3 +157,19 @@ augroup END
 " au VimLeave * :call MakeSession()
 nmap <silent> <C-N> :nohl<CR>
 " set mouse=a
+
+"markdown highlight options
+let g:vim_markdown_folding_disabled=1
+"" let g:vim_markdown_math=1 " for latex math
+
+" spell checking for certain file extensions
+autocmd BufRead,BufNewFile *.tex,*.txt,*.html,*.yml,*.md setlocal spell
+" Add highlighting for function definition in C++
+function! EnhanceCppSyntax()
+  syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
+  hi def link cppFuncDef Special
+endfunction
+autocmd Syntax cpp call EnhanceCppSyntax()
+
+" C++11 Syntastic support
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
