@@ -177,3 +177,8 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
+" Comment
+let mapleader=','
+nnoremap // :TComment<CR>
+vnoremap // :TComment<CR>
