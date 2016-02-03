@@ -191,7 +191,7 @@ vnoremap // :TComment<CR>
 
 " Solarized options
 syntax enable
-let g:solarized_termtrans=1
+let g:solarized_termtrans=1 " transparent background
 set background=dark
 colorscheme solarized
 
