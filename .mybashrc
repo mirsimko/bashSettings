@@ -24,6 +24,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -lth'
 
+# Set xterm background as black
+alias xterm='xterm -bg black -fg white'
+
 # aliases for typos
 alias cdd='cd'
 alias 'cd..'='cd ..'
