@@ -25,7 +25,7 @@ alias la='ls -A'
 alias l='ls -lth'
 
 # Set xterm background as black
-alias xterm='xterm -bg black -fg white'
+# alias xterm='xterm -bg black -fg white' # not needed anymore as the colorse are set in .Xresources
 
 # aliases for typos
 alias cdd='cd'

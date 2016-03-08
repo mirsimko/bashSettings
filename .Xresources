@@ -1,0 +1,5 @@
+xterm*termName: xterm-256color
+Xterm*saveLines: 40096
+xterm*vt100*geometry: 80x50
+xterm*foreground: rgb:a8/a8/a8
+xterm*background: rgb:00/00/00
