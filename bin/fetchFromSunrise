@@ -1,0 +1,18 @@
+#!/bin/bash
+
+username=simkomir
+server=sunrise.fjfi.cvut.cz
+
+if [ -z $1 ]; then
+  echo No file to fetch
+  exit 1
+fi
+
+firstLetter="$(echo $1 | head -c 1)" # first letter of the first argument
+
+if [ "$firstLetter" == "/" ]; then
+  scp $username@$server:$1 .
+else
+  scp $username@$server:/home/simkomir/$1 .
+fi
+
