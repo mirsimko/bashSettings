@@ -3,16 +3,4 @@
 username=msimko
 server=rftpexp.rhic.bnl.gov
 
-if [ -z $1 ]; then
-  echo No file to fetch
-  exit 1
-fi
-
-firstLetter="$(echo $1 | head -c 1)" # first letter of the first argument
-
-if [ "$firstLetter" == "/" ]; then
-  scp $username@$server:$1 .
-else
-  scp $username@$server:/star/u/msimko/$1 .
-fi
-
+scpFromServer.sh $username $server $1

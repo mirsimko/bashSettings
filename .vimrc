@@ -179,6 +179,16 @@ autocmd Syntax cpp call EnhanceCppSyntax()
 
 " C++11 Syntastic support
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+" recommended syntastic options
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare

@@ -3,16 +3,4 @@
 username=simkomir
 server=dtn01.nersc.gov
 
-if [ -z $1 ]; then
-  echo No file to fetch
-  exit 1
-fi
-
-firstLetter="$(echo $1 | head -c 1)" # first letter of the first argument
-
-if [ "$firstLetter" == "/" ]; then
-  scp $username@$server:$1 .
-else
-  scp $username@$server:/global/homes/s/simkomir/$1 .
-fi
-
+scpFromServer.sh $username $server $1
