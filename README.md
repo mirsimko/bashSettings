@@ -15,8 +15,6 @@ $ ./setupVim.sh
 ```
 ## To load .Xresources (config for xterm)
 
-In your home run:
 ```bash
-$ ln -s bashSettings/.Xresources
-$ xrdb -merge ~/.Xresources
+$ ./configureXterm.sh
 ```
