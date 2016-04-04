@@ -15,13 +15,17 @@ Plugin 'gmarik/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between here and filetype plugin indent on.
 " scripts on GitHub repos
+" for git
 Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-rails.git'
+" file selector
 Plugin 'The-NERD-tree'
+" surround tool
 Plugin 'tpope/vim-surround'
 Plugin 'vimlatex'
 Plugin 'OmniCppComplete'
+" .md tool
 Plugin 'plasticboy/vim-markdown'
 Plugin 'Syntastic'
 Plugin 'tComment'
@@ -32,7 +36,10 @@ Plugin 'Tabular'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'Solarized' " color-scheme
 Plugin 'airblade/vim-gitgutter'
+" buffer selection
 Plugin 'ack.vim'
+" vim writing tool
+Plugin 'reedes/vim-pencil'
 
 
 nnoremap // :TComment<CR>
