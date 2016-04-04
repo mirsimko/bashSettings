@@ -40,6 +40,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'ack.vim'
 " vim writing tool
 Plugin 'reedes/vim-pencil'
+" better functionality of the '.' command
+Plugin 'tpope/vim-repeat'
 
 
 nnoremap // :TComment<CR>
@@ -212,3 +214,5 @@ let g:solarized_termtrans=1 " transparent background
 set background=dark
 colorscheme solarized
 
+" this line enables vim-repeat
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
