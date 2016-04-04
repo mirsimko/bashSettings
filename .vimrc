@@ -15,13 +15,17 @@ Plugin 'gmarik/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between here and filetype plugin indent on.
 " scripts on GitHub repos
+" for git actions from within vim
 Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-rails.git'
+" file selector
 Plugin 'The-NERD-tree'
+" surround tool
 Plugin 'tpope/vim-surround'
 Plugin 'vimlatex'
 Plugin 'OmniCppComplete'
+" .md tool
 Plugin 'plasticboy/vim-markdown'
 Plugin 'Syntastic'
 Plugin 'tComment'
@@ -31,8 +35,16 @@ Plugin 'grep.vim'
 Plugin 'Tabular'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'Solarized' " color-scheme
+" git changes
 Plugin 'airblade/vim-gitgutter'
+" buffer selection
 Plugin 'ack.vim'
+" vim writing tool
+Plugin 'reedes/vim-pencil'
+" better functionality of the '.' command
+Plugin 'tpope/vim-repeat'
+" automatic delimeters (e.g. brackets, quotes) closing
+Plugin 'Raimondi/delimitMate'
 
 
 nnoremap // :TComment<CR>
@@ -206,3 +218,5 @@ let g:solarized_termtrans=1 " transparent background
 set background=dark
 colorscheme solarized
 
+" this line enables vim-repeat
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
