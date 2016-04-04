@@ -101,6 +101,7 @@ set number
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 
+" ctrlP settings
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
