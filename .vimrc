@@ -37,7 +37,7 @@ Plugin 'Lokaltog/vim-powerline'
 Plugin 'Solarized' " color-scheme
 " git changes
 Plugin 'airblade/vim-gitgutter'
-" buffer selection
+" a grep-like search tool	
 Plugin 'ack.vim'
 " vim writing tool
 Plugin 'reedes/vim-pencil'
