@@ -32,6 +32,7 @@ Plugin 'Tabular'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'Solarized' " color-scheme
 Plugin 'airblade/vim-gitgutter'
+Plugin 'ack.vim'
 
 
 nnoremap // :TComment<CR>
