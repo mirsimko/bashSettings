@@ -34,12 +34,13 @@ Plugin 'file-line'
 Plugin 'grep.vim'
 Plugin 'Tabular'
 Plugin 'Lokaltog/vim-powerline'
-Plugin 'Solarized' " color-scheme
+" color-scheme
+Plugin 'Solarized' 
 " git changes
 Plugin 'airblade/vim-gitgutter'
 " a grep-like search tool	
 Plugin 'ack.vim'
-" vim writing tool
+" vim writing tool for e.g. latex
 Plugin 'reedes/vim-pencil'
 " better functionality of the '.' command
 Plugin 'tpope/vim-repeat'
