@@ -220,3 +220,7 @@ colorscheme solarized
 
 " this line enables vim-repeat
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+" DelimitMate basic functionality
+let delimitMate_expand_cr = 1
+filetype indent plugin on
