@@ -38,6 +38,7 @@ alias xs='cd'
 alias pwdd='pwd'
 alias vimm='vim'
 alias vi='vim'
+alias ffg='fg'
 
 # More aliases
 alias root='root -l'
