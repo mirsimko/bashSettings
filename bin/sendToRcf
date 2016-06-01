@@ -3,4 +3,4 @@
 file=$1
 user=msimko
 server=rftpexp.rhic.bnl.gov
-scp $1 $user@$server
+scpToServer.sh $file $user $server

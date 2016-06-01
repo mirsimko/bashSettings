@@ -3,4 +3,4 @@
 file=$1
 user=simkomir
 server=sunrise.fjfi.cvut.cz
-scp $1 $user@$server
+scpToServer $file $user $server
