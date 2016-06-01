@@ -1,0 +1,6 @@
+#!/bin/bash
+
+file=$1
+user=simkomir
+server=dtn01.nersc.gov
+scp $1 $user@$server

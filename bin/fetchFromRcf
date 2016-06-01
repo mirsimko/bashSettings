@@ -3,4 +3,4 @@
 username=msimko
 server=rftpexp.rhic.bnl.gov
 
-scpFromServer.sh $username $server $1
+scpFromServer.sh $username $server "$1"

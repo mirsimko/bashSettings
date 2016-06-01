@@ -3,4 +3,4 @@
 username=simkomir
 server=sunrise.fjfi.cvut.cz
 
-scpFromServer.sh $username $server $1
+scpFromServer.sh $username $server "$1"
