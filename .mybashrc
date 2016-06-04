@@ -39,6 +39,7 @@ alias pwdd='pwd'
 alias vimm='vim'
 alias vi='vim'
 alias ffg='fg'
+alias fgg='fg'
 
 # More aliases
 alias root='root -l'
