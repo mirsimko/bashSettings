@@ -173,7 +173,7 @@ augroup END
 " au VimEnter * nested :call LoadSession()
 " au VimLeave * :call MakeSession()
 nmap <silent> <C-N> :nohl<CR>
-" set mouse=a
+set mouse=a
 
 "markdown highlight options
 let g:vim_markdown_folding_disabled=1
