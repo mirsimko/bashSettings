@@ -49,6 +49,7 @@ Plugin 'tpope/vim-repeat'
 " automatic delimeters (e.g. brackets, quotes) closing
 Plugin 'Raimondi/delimitMate'
 Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'bronson/vim-crosshairs'
 
 
 nnoremap // :TComment<CR>
@@ -229,6 +230,6 @@ silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 let delimitMate_expand_cr = 1
 filetype indent plugin on
 
-" crosshair
-set cursorline    " enable the horizontal line
-set cursorcolumn  " enable the vertical line
+" crosshairs
+set cursorline
+set cursorcolumn
