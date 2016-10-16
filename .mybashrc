@@ -44,6 +44,7 @@ alias fgg='fg'
 
 # More aliases
 alias root='root -l'
+alias markdown='pandoc'
 
 # Add ~/bin to $PATH
 PATH=$PATH:~/bin

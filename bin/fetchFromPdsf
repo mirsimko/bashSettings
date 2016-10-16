@@ -1,6 +1,6 @@
 #!/bin/bash
 
 username=simkomir
-server=dtn01.nersc.gov
+server=dtn02.nersc.gov
 
 scpFromServer.sh $username $server "$1"
