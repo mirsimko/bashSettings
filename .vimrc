@@ -30,8 +30,9 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'Syntastic'
 Plugin 'tComment'
 " rainbow parentheses
-Plugin 'rainbow_parentheses.vim'
-" Plugin 'luochen1990/rainbow'
+" Plugin 'rainbow_parentheses.vim'
+Plugin 'luochen1990/rainbow'
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 Plugin 'file-line'
 Plugin 'grep.vim'
 Plugin 'Tabular'
@@ -206,11 +207,6 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
-
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 " Comment
 let mapleader=','
