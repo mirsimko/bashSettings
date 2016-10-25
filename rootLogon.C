@@ -33,5 +33,5 @@
   myStyle->SetPadGridX(0);
   myStyle->SetPadGridY(0);
 
-  gROOT->SetStyle("MyStyle"); // This sets this style automatically at start
+  // gROOT->SetStyle("MyStyle"); // This sets this style automatically at start
 }
