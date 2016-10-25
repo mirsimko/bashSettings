@@ -6,15 +6,19 @@ Settings of aliases, vim, etc.
 ```bash
 $ git clone https://github.com/mirsimko/bashSettings.git
 ```
-Copy .vimrc and .vim to the home directory
+Copy `.vimrc` and `.vim` to the home directory
 
 in your home run:
 ```bash
 $ cd .vim
 $ ./setupVim.sh
 ```
-## To load .Xresources (config for xterm)
+## To load `.Xresources` (config for xterm)
 
 ```bash
 $ ./configureXterm.sh
 ```
+
+## Default style in Root
+
+Make a link of `.rootrc` in your home
