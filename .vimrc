@@ -228,4 +228,4 @@ filetype indent plugin on
 
 " crosshairs
 set cursorline
-set cursorcolumn
+" set cursorcolumn
