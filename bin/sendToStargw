@@ -1,0 +1,7 @@
+#!/bin/bash
+
+file=$1
+user=msimko 
+server=stargw.starp.bnl.gov
+
+scpToServer.sh $file $user $server
