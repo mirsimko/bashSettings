@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ln -s ~/bashSettings/.Xresources ~/.Xresources
+ln -s .Xresources ~/.Xresources
 xrdb -merge ~/.Xresources
