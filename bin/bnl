@@ -1,2 +1,2 @@
 #!/bin/bash
-ssh -A -Y msimko@rssh.rhic.bnl.gov
+ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i'
