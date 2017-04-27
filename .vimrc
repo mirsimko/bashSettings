@@ -51,6 +51,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'Raimondi/delimitMate'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'bronson/vim-crosshairs'
+" moving in tmux as if in vim
+Plugin 'christoomey/vim-tmux-navigator'
 
 
 nnoremap // :TComment<CR>
@@ -229,3 +231,9 @@ filetype indent plugin on
 " crosshairs
 set cursorline
 " set cursorcolumn
+
+" moving in vim windows
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
