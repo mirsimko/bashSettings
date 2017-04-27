@@ -27,6 +27,9 @@ alias l='ls -lth'
 # Set xterm background as black
 alias xt='xterm &'
 
+# Set tmux to have 256 colors
+alias tmux='TERM=xterm-256color tmux'
+
 # aliases for typos
 alias cdd='cd'
 alias 'cd..'='cd ..'
