@@ -19,6 +19,11 @@ $ ./setupVim.sh
 $ ./configureXterm.sh
 ```
 
-## Default style in Root
+## Configuring tmux
 
-Make a link of `.rootrc` in your home
+Make a link of `.tmux.conf` in your home
+in tmux run
+
+```bash
+$ tmux source-file ~/.tmux.conf
+```
