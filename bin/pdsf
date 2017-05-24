@@ -1,3 +1,9 @@
 #!/bin/bash
 
-ssh -Y -A simkomir@pdsf.nersc.gov
+re='^[0-9]+$' 
+if [[ $1 =~ $re ]] ; then  # check if the first argument is a number
+  echo connecting to simkomir@pdsf"$1".nersc.gov
+  ssh -Y -A simkomir@pdsf"$1".nersc.gov
+else				  # or lets connect to any node automacilly
+  ssh -Y -A simkomir@pdsf.nersc.gov
+fi
