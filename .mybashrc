@@ -51,3 +51,6 @@ alias markdown='pandoc'
 
 # Add ~/bin to $PATH
 PATH=$PATH:~/bin
+
+# protection on accidental closing of the terminal
+export IGNOREEOF=5

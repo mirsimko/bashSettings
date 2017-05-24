@@ -72,6 +72,8 @@ Plugin 'kien/ctrlp.vim'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
 " ...
+" clipping and pasting made faster
+Plugin 'svermeulen/vim-easyclip'
 call vundle#end()            " required
 filetype plugin indent on     " required
 
@@ -237,3 +239,5 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+let g:EasyClipUseSubstituteDefaults = 1
