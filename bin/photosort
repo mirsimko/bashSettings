@@ -1,0 +1,30 @@
+#!/bin/bash
+
+home=${1:-"$PWD"}
+
+echo running in "$home"
+
+if [ ! -d "$home"  ]; then
+  echo '"'"$home"'" is not a directory'
+  exit 1
+fi
+
+status=1
+if ( ls "$home"/*.jpg > /dev/null 2>&1 ); then
+  jhead -n%Y%m%d-%H%M%S "$home"/*.jpg 
+  status=0
+fi
+if  ( ls "$home"/*.JPG  > /dev/null 2>&1 ); then
+  jhead -n%Y%m%d-%H%M%S "$home"/*.JPG 
+  status=0
+fi
+if  ( ls "$home"/*.jpeg  > /dev/null 2>&1 ); then
+  jhead -n%Y%m%d-%H%M%S "$home"/*.jpeg 
+  status=0
+fi
+
+if [ "$status" -eq "1" ]; then
+  echo '"'"$home"'" does not contain any .jpg, .JPG or .jpeg files'
+  echo 
+fi
+exit $status
