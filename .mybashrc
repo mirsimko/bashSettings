@@ -54,3 +54,7 @@ PATH=$PATH:~/bin
 
 # protection on accidental closing of the terminal
 export IGNOREEOF=5
+
+# default editor
+export EDITOR='vim'
+export VISUAL='vim'
