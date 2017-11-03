@@ -48,7 +48,7 @@ Plugin 'reedes/vim-pencil'
 " better functionality of the '.' command
 Plugin 'tpope/vim-repeat'
 " automatic delimeters (e.g. brackets, quotes) closing
-Plugin 'Raimondi/delimitMate'
+" Plugin 'Raimondi/delimitMate'
 Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'bronson/vim-crosshairs'
 " moving in tmux as if in vim
@@ -227,8 +227,8 @@ colorscheme solarized
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 " DelimitMate basic functionality
-let delimitMate_expand_cr = 1
-filetype indent plugin on
+" let delimitMate_expand_cr = 1
+" filetype indent plugin on
 
 " crosshairs
 set cursorline

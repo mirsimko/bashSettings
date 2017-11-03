@@ -25,6 +25,7 @@ pushd "$dir" >> /dev/null
 eog *
 
 popd >> /dev/null
+echo Deleting decrypted content ...
 srm -rfl "$dir"
 srm -l "$tarfile"
 
