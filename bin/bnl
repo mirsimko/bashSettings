@@ -3,12 +3,12 @@
 numberForm='^[0-9]+$' 
 rcasForm='^rcas[0-9]+$'
 
-if [ -z $1 ] ; then                  # if there isn't a first argument or it is empty
+if [ -z $1 ] ; then                                 # if there isn't a first argument or it is empty
   ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i'  # lets connect to any node automacilly
-elif [[ $1 =~ $numberForm ]] ; then  # check if the first argument is a number
+elif [[ $1 =~ $numberForm ]] ; then                 # check if the first argument is a number
   echo connecting to rcas"$1"
   ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i rcas'"$1"
-elif [[ $1 =~ $rcasForm ]] ; then  # check if the first argument is rcas followed by a number
+elif [[ $1 =~ $rcasForm ]] ; then                   # check if the first argument is rcas followed by a number
   echo connecting to "$1" 
   ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i '"$1"
 else

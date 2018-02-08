@@ -2,7 +2,7 @@
 
 numberFormat='^[0-9]+$' 
 
-if [ -z "$1" ]; then                          # if the first argument is empty or doesn't exist
+if [ -z "$1" ]; then                        # if the first argument is empty or doesn't exist
   ssh -Y simkomir@pdsf.nersc.gov            # connect to any node automacilly
 elif [[ $1 =~ $numberFormat ]] ; then       # check if the first argument is a number
   echo connecting to simkomir@pdsf"$1".nersc.gov
