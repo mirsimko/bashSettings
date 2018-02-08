@@ -1,9 +1,13 @@
 #!/bin/bash
 
-re='^[0-9]+$' 
-if [[ $1 =~ $re ]] ; then  # check if the first argument is a number
+numberFormat='^[0-9]+$' 
+
+if [ -z "$1" ]; then                          # if the first argument is empty or doesn't exist
+  ssh -Y simkomir@pdsf.nersc.gov            # connect to any node automacilly
+elif [[ $1 =~ $numberFormat ]] ; then       # check if the first argument is a number
   echo connecting to simkomir@pdsf"$1".nersc.gov
   ssh -Y -A simkomir@pdsf"$1".nersc.gov
-else				  # or lets connect to any node automacilly
-  ssh -Y simkomir@pdsf.nersc.gov
+else
+  (>&2 echo Incorrect input format: Input must be a number)
+  exit 1
 fi

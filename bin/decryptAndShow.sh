@@ -24,7 +24,9 @@ dir=$( echo "$tarfile" | sed 's/.tar//g' )
 pushd "$dir" >> /dev/null
 eog *
 
+read -n 1 -s -r -p "Press any key to continue"
 popd >> /dev/null
+echo
 echo Deleting decrypted content ...
 srm -rfl "$dir"
 srm -l "$tarfile"
