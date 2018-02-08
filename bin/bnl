@@ -4,7 +4,7 @@ numberForm='^[0-9]+$'
 rcasForm='^rcas[0-9]+$'
 
 if [ -z $1 ] ; then                                 # if there isn't a first argument or it is empty
-  ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i'  # lets connect to any node automacilly
+  ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i'  # lets connect to any node automatically
 elif [[ $1 =~ $numberForm ]] ; then                 # check if the first argument is a number
   echo connecting to rcas"$1"
   ssh -A -Y msimko@rssh.rhic.bnl.gov -t 'rterm -i rcas'"$1"
