@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh -A -Y msimko@stargw.starp.bnl.gov -t bash
