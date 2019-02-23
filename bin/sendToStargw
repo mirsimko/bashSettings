@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file=$1
+file="$1"
 user=msimko 
 server=stargw.starp.bnl.gov
 

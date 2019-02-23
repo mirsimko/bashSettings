@@ -135,8 +135,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 :let g:ctrlp_dotfiles = 0
 :let g:ctrlp_switch_buffer = 0
 
-execute pathogen#infect()
-
 " This function will restore the last known position
 function! ResCur()
   if line("'\"") <= line("$")

@@ -21,13 +21,25 @@ tar -xzf "$tarfile"
 
 dir=$( echo "$tarfile" | sed 's/.tar//g' )
 # echo $dir
-pushd "$dir" >> /dev/null
-eog *
+if [ -d "$dir" ]; then  
+  # if the encrypted file contains a dirrectory, go there
+  # if not, the jpegs will be decrypted directly
+  pushd "$dir" >> /dev/null
+fi
+eog *.JPG *.jpg
 
 read -n 1 -s -r -p "Press any key to continue"
-popd >> /dev/null
+
+if [ -d "../$dir" ]; then
+  popd >> /dev/null
+fi
 echo
 echo Deleting decrypted content ...
-srm -rfl "$dir"
-srm -l "$tarfile"
+
+if [ -d "$dir" ]; then
+  srm -rflv "$dir"
+else
+  srm -flv IMG_183[6-9].JPG
+fi
+srm -flv "$tarfile"
 
