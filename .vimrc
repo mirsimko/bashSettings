@@ -29,6 +29,8 @@ Plugin 'OmniCppComplete'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'Syntastic'
 Plugin 'tComment'
+" disables modelines as they are a potential security breach
+Plugin 'securemodelines'
 " rainbow parentheses
 " Plugin 'rainbow_parentheses.vim'
 Plugin 'luochen1990/rainbow'
@@ -112,7 +114,7 @@ set history=50
 set hlsearch
 set ignorecase
 set incsearch
-set nomodeline
+set nomodeline    " security measure ... disables txt modelines
 set printoptions=paper:letter
 set ruler
 set shiftwidth=2
