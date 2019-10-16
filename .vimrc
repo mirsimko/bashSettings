@@ -55,6 +55,8 @@ Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'bronson/vim-crosshairs'
 " moving in tmux as if in vim
 Plugin 'christoomey/vim-tmux-navigator'
+" C++ and Python automatic code completion
+" Plugin 'oblitum/YouCompleteMe'
 
 
 nnoremap // :TComment<CR>

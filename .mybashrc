@@ -30,7 +30,7 @@ alias xt='xterm &'
 # Set tmux to have 256 colors
 alias tmux='TERM=xterm-256color tmux'
 
-# aliases for typos
+# aliases for fat fingers
 alias cdd='cd'
 alias 'cd..'='cd ..'
 alias 'cd-'='cd -'
@@ -44,10 +44,13 @@ alias vvim='vim'
 alias vi='vim'
 alias ffg='fg'
 alias fgg='fg'
+alias exot='exit'
 
 # More aliases
 alias root='root -l'
 alias markdown='pandoc'
+
+alias vtkpython='vtk6python'
 
 # Add ~/bin to $PATH
 PATH=$PATH:~/bin

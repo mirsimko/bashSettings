@@ -9,6 +9,8 @@ directory="/home/miro/MEGAsync/ProtonVPN_securecore_configs/"
 endFile=""
 if [ "$whereTo" == "fjfi" ] ; then
   endFile=.ovpn
+elif [ "$whereTo" == "iolabs" ]; then
+  endFile=.ovpn
 elif [ ${#whereTo} == "2" ] || [ "${whereTo: -3}" == "-01" ] ; then
   endFile=".protonvpn.com.udp1194.ovpn"
 else
