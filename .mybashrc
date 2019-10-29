@@ -61,3 +61,5 @@ export IGNOREEOF=5
 # default editor
 export EDITOR='vim'
 export VISUAL='vim'
+
+set -o vi
