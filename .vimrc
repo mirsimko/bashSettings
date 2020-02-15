@@ -57,6 +57,7 @@ Plugin 'bronson/vim-crosshairs'
 Plugin 'christoomey/vim-tmux-navigator'
 " C++ and Python automatic code completion
 " Plugin 'oblitum/YouCompleteMe'
+Plugin 'tmhedberg/matchit'
 
 
 nnoremap // :TComment<CR>
