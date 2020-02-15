@@ -5,7 +5,7 @@ whereTo=${1:-"is-us-01"}
 # echo ${#whereTo}
 # echo ${whereTo: -3}
 
-directory="/home/miro/MEGAsync/ProtonVPN_securecore_configs/"
+directory="$HOME/MEGAsync/ProtonVPN_securecore_configs/"
 endFile=""
 if [ "$whereTo" == "fjfi" ] ; then
   endFile=.ovpn
