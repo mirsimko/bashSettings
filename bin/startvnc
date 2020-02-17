@@ -1,0 +1,6 @@
+#!/bin/bash
+
+res=${1:-1800x1000}
+server=${2:-':1'}
+
+vncserver "$server" -geometry "$res" -depth 16 -pixelformat rgb565
