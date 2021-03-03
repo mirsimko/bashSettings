@@ -7,8 +7,9 @@ whereTo=${1:-"is-us-01"}
 
 directory="$HOME/MEGAsync/ProtonVPN_securecore_configs/"
 endFile=""
-if [ "$whereTo" == "fjfi" ] ; then
-  endFile=.ovpn
+if [ "$whereTo" == "fjfi" ] || [ "$whereTo" == "CVUT" ] ; then
+  sudo vpnc CVUT.conf
+  exit 0
 elif [ "$whereTo" == "iolabs" ]; then
   endFile=.ovpn
 elif [ ${#whereTo} == "2" ] || [ "${whereTo: -3}" == "-01" ] ; then
