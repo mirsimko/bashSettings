@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo mount -t cifs -o user=ms,uid=$(id -u),gid=$(id -g) //192.168.100.11/home /mnt/shifty/home/
+sudo mount -t cifs -o user=ms,uid=$(id -u),gid=$(id -g) //192.168.100.11/projects /mnt/shifty/projects/
