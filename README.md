@@ -44,3 +44,7 @@ $ gsettings set org.gnome.desktop.input-sources xkb-options "['caps:swapescape',
 Now, ESC and CapsLock should be swapped in the US layout. You can add other keyboard layouts (e.g. Japanese Mozc) now.
 
 [1]: https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
+
+## For colors in less:
+
+In your home, make a link to .lessfilter. Install pygments or python-pygments.
