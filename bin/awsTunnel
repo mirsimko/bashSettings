@@ -1,0 +1,22 @@
+#!/bin/bash
+
+ServerAddress=$1
+location=${2:-Tokyo}
+
+case "$location" in
+  Tokyo)
+    keyPair=miroEC2Tokyo.pem
+    ;;
+  Osaka)
+    keyPair=miroEC2Osaka.pem
+    ;;
+  Frankfurt)
+    keyPair=miroAwsEC2.pem
+    ;;
+  *)
+    echo $keyPair is not valid location
+    exit 2
+    ;;
+esac
+
+ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair -N -f -l 8888:localhost:8888 ubuntu@$ServerAddress
