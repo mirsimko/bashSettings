@@ -18,5 +18,6 @@ case "$location" in
     echo Invalid location
     exit 2
     ;;
+esac
 
 ssh -A -Y -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair ubuntu@$ServerAddress
