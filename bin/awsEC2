@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ServerAddress=$1
-location=${2-:Tokyo}
+location=${2:-Tokyo}
 
 case "$location" in
 
@@ -15,7 +15,7 @@ case "$location" in
     keyPair=miroAwsEC2.pem
     ;;
   *)
-    echo Invalid location
+    echo $keyPair is not valid location
     exit 2
     ;;
 esac
