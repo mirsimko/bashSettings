@@ -1,14 +1,17 @@
 #!/bin/bash
 
-ln -s .mybashrc ~/.mybashrc
+ln -s $PWD/.mybashrc ~/.mybashrc
+ln -s $PWD/bin ~/bin
 echo                             >> ~/.bashrc 
 echo 'if [ -f .mybashrc ]; then' >> ~/.bashrc 
 echo '  . .mybashrc'             >> ~/.bashrc 
 echo 'fi'                        >> ~/.bashrc   
+echo                             >> ~/.bashrc
+echo 'PATH=$PATH:~/bin'          >> ~/.bashrc
 
-ln -s .vimrc ~/.vimrc
-cp -r .vim ~/.vim
+ln -s $PWD/.vimrc ~/.vimrc
+cp -r $PWD/.vim ~/.vim
 
 pushd ~/.vim >> /dev/null
-./sutupVim
+./setupVim.sh
 popd >> /dev/null
