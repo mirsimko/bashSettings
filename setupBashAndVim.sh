@@ -7,7 +7,7 @@ echo 'if [ -f .mybashrc ]; then' >> ~/.bashrc
 echo '  . .mybashrc'             >> ~/.bashrc 
 echo 'fi'                        >> ~/.bashrc   
 echo                             >> ~/.bashrc
-echo 'PATH=$PATH:~/bin'          >> ~/.bashrc
+echo 'export PATH=$PATH:~/bin'          >> ~/.bashrc
 
 ln -s $PWD/.vimrc ~/.vimrc
 cp -r $PWD/.vim ~/.vim
