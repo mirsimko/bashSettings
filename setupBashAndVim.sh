@@ -3,8 +3,8 @@
 ln -s $PWD/.mybashrc ~/.mybashrc
 ln -s $PWD/bin ~/bin
 echo                             >> ~/.bashrc 
-echo 'if [ -f .mybashrc ]; then' >> ~/.bashrc 
-echo '  . .mybashrc'             >> ~/.bashrc 
+echo 'if [ -f ~/.mybashrc ]; then' >> ~/.bashrc 
+echo '  . ~/.mybashrc'             >> ~/.bashrc 
 echo 'fi'                        >> ~/.bashrc   
 echo                             >> ~/.bashrc
 echo 'export PATH=$PATH:~/bin'          >> ~/.bashrc
