@@ -1,7 +1,8 @@
 #!/bin/bash
 
-ServerAddress=$1
-location=${2:-Tokyo}
+toTar="$1"
+ServerAddress=$2
+location=${3:-Tokyo}
 
 case "$location" in
   Tokyo)
@@ -19,4 +20,4 @@ case "$location" in
     ;;
 esac
 
-ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair -N -f -L 8888:localhost:8888 ubuntu@$ServerAddress
+tar czf - "$toTar" | ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair ubuntu@$ServerAddress 'tar xzf -'
