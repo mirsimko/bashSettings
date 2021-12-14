@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh -A -Y admin@195.82.45.112
