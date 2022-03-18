@@ -2,4 +2,4 @@
 
 toTar="$1"
 
-ssh admin@195.82.45.112 'tar czf - "'$toTar'"' | tar xzf -
+tunnelTarFromMacincloud df712 "$toTar"

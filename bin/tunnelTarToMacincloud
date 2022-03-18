@@ -1,0 +1,6 @@
+#!/bin/bash
+
+MICnumber="$1"
+toTar="$2"
+
+tar czf - "$toTar" | ssh admin@"$MICnumber".macincloud.com 'tar xzf -'
