@@ -20,4 +20,4 @@ case "$location" in
     ;;
 esac
 
-ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair -N -f -L 8888:localhost:8888 ubuntu@$ServerAddress
+ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair -N -f -L 8888:localhost:8888 $userName@$ServerAddress
