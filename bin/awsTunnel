@@ -2,6 +2,7 @@
 
 ServerAddress=$1
 location=${2:-Tokyo}
+userName=${3:-ec2-user}
 
 case "$location" in
   Tokyo)

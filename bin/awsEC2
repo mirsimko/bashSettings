@@ -2,6 +2,7 @@
 
 ServerAddress=$1
 location=${2:-Tokyo}
+userName=${3:-ec2-user}
 
 case "$location" in
 
@@ -20,4 +21,6 @@ case "$location" in
     ;;
 esac
 
-ssh -A -Y -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair ubuntu@$ServerAddress
+userName=ec2-user 
+
+ssh -A -Y -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair $userName@$ServerAddress

@@ -3,6 +3,7 @@
 toTar="$1"
 ServerAddress=$2
 location=${3:-Tokyo}
+userName=${4:-ec2-user}
 
 case "$location" in
   Tokyo)
