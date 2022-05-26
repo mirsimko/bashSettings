@@ -2,7 +2,7 @@
 
 ServerAddress=$1
 location=${2:-Tokyo}
-username=ec2-user
+userName=${3:-ec2-user}
 
 case "$location" in
 

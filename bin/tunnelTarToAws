@@ -3,6 +3,7 @@
 toTar="$1"
 ServerAddress=$2
 location=${3:-Tokyo}
+userName=${4:-ec2-user}
 
 case "$location" in
   Tokyo)
@@ -20,4 +21,4 @@ case "$location" in
     ;;
 esac
 
-tar czf - "$toTar" | ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair ubuntu@$ServerAddress 'tar xzf -'
+tar czf - "$toTar" | ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair $userName@$ServerAddress 'tar xzf -'

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo mount -t cifs -o user=ms,uid=$(id -u),gid=$(id -g) //192.168.100.61/ai_watermark_data /mnt/russel/ai_watermark_data
+sudo mount -t cifs -o user=ms,uid=$(id -u),gid=$(id -g) //192.168.100.61/sartorius-dashboard-staging_watermark /mnt/russel/sartorius-dashboard-staging_watermark
