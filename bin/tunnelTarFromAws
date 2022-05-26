@@ -21,4 +21,5 @@ case "$location" in
     ;;
 esac
 
-ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair $userName@$ServerAddress 'tar czf - "'$toTar'"' | tar xzf -
+# ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair $userName@$ServerAddress 'tar czf - "'$toTar'"' | tar xzf -
+ssh -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair $userName@$ServerAddress 'cat "'$toTar'"' > "$toTar"
