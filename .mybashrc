@@ -52,6 +52,10 @@ alias markdown='pandoc'
 
 alias vtkpython='vtk6python'
 
+# wsl aliases
+alias pbcopy="xsel --input --clipboard"
+alias pbpaste="xsel --output --clipboard"
+
 # Add ~/bin to $PATH
 PATH=$PATH:~/bin
 

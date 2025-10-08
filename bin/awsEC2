@@ -21,4 +21,5 @@ case "$location" in
     ;;
 esac
 
-ssh -A -Y -i ~/MEGAsync/ioLabs/ML/pytorch/aws/$keyPair $username@$ServerAddress
+echo ssh -A -Y -i ~/aws/$keyPair $userName@$ServerAddress
+ssh -A -Y -i ~/aws/$keyPair $userName@$ServerAddress
