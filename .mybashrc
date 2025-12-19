@@ -56,6 +56,12 @@ alias vtkpython='vtk6python'
 alias pbcopy="xsel --input --clipboard"
 alias pbpaste="xsel --output --clipboard"
 
+# fabric
+alias hackycarky="fabric -sp hacky_carky"
+alias translate-to-czech="fabric -sp translate -v lang_code:cs-cz"
+alias translate-to-english="fabric -sp translate -v lang_code:us-en"
+alias translate-to-japanese="fabric -sp translate -v lang_code:ja-jp"
+
 # Add ~/bin to $PATH
 PATH=$PATH:~/bin
 
@@ -65,6 +71,7 @@ export IGNOREEOF=5
 # default editor
 export EDITOR='vim'
 export VISUAL='vim'
+
 
 set -o vi
 
