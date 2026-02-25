@@ -5,17 +5,17 @@
 
 echo "Starting AI tools update..."
 
-# Update GEMINI CLI
-echo "Updating GEMINI CLI..."
-sudo npm update -g @google/generative-ai
+# Update Gemini CLI
+echo "Updating Gemini CLI..."
+sudo npm update -g @google/gemini-cli
 
 # Update Claude Code
 echo "Updating Claude Code..."
-sudo npm update -g claude-code
+sudo npm update -g @anthropic-ai/claude-code
 
 # Update Codex
 echo "Updating Codex..."
-sudo npm update -g github-codex
+sudo npm update -g @openai/codex
 
 # Update Codebuff
 echo "Updating Codebuff..."
@@ -23,6 +23,6 @@ sudo npm update -g codebuff
 
 # Update OpenCode
 echo "Updating OpenCode..."
-sudo npm update -g opencode
+sudo npm update -g opencode-ai
 
 echo "All AI tools updated successfully!"
