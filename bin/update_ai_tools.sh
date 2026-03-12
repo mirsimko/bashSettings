@@ -25,4 +25,8 @@ sudo npm update -g codebuff
 echo "Updating OpenCode..."
 sudo npm update -g opencode-ai
 
+# Update Context Hub
+echo "Updating Context Hub..."
+sudo npm update -g @aisuite/chub
+
 echo "All AI tools updated successfully!"
