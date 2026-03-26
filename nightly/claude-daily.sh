@@ -24,7 +24,7 @@ fi
 # Start Edge with remote debugging if not running
 if ! powershell.exe -Command "Get-Process msedge -ErrorAction SilentlyContinue" &>/dev/null; then
   echo "Starting Edge with remote debugging..." >> "$LOG_FILE"
-  powershell.exe -Command "Start-Process 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe' -ArgumentList '--remote-debugging-port=9222'" &>/dev/null
+  powershell.exe -Command "Start-Process 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe' -ArgumentList '--remote-debugging-port=9222','--remote-debugging-address=0.0.0.0','--remote-allow-origins=*'" &>/dev/null
   sleep 5
 fi
 
