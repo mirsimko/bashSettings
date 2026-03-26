@@ -29,4 +29,7 @@ sudo npm update -g opencode-ai
 echo "Updating Context Hub..."
 sudo npm update -g @aisuite/chub
 
+echo "Updating QMD"
+sudo npm update -g @tobilu/qmd
+
 echo "All AI tools updated successfully!"
