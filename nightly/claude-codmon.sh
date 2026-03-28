@@ -2,6 +2,16 @@
 VAULT_DIR="/mnt/c/Users/mirsi/OneDrive/Dokumenty/miro_vault/zettelkasten"
 DATE=$(date +%Y-%m-%d)
 LOG_FILE="/tmp/claude-codmon-${DATE}.log"
+NTFY_URL="http://192.168.0.14/claude-agents"
+
+notify_failure() {
+  curl -sf -m 5 \
+    -H "Title: Codmon Agent Failed" \
+    -H "Priority: high" \
+    -H "Tags: warning" \
+    -d "$1" \
+    "$NTFY_URL" 2>/dev/null || true
+}
 
 echo "=== Claude Codmon Agent - ${DATE} ===" >> "$LOG_FILE"
 echo "Started: $(date)" >> "$LOG_FILE"
@@ -18,6 +28,11 @@ if ! powershell.exe -Command "Get-Process 'Docker Desktop' -ErrorAction Silently
     fi
     sleep 10
   done
+  if ! docker info &>/dev/null; then
+    echo "ERROR: Docker failed to start after 5 minutes" >> "$LOG_FILE"
+    notify_failure "Docker Desktop failed to start after 5 minutes. Codmon agent cannot run. Check log: $LOG_FILE"
+    exit 1
+  fi
 fi
 
 # Start Edge with remote debugging if not running
@@ -132,5 +147,11 @@ You are a READ-ONLY agent for the browser. You gather information from Codmon an
   --output-format text \
   --max-budget-usd 2 \
   >> "$LOG_FILE" 2>&1
+
+CLAUDE_EXIT=$?
+if [ $CLAUDE_EXIT -ne 0 ]; then
+  echo "ERROR: Claude exited with code $CLAUDE_EXIT" >> "$LOG_FILE"
+  notify_failure "Codmon agent exited with code $CLAUDE_EXIT (budget exceeded or crash). Check log: $LOG_FILE"
+fi
 
 echo "Finished: $(date)" >> "$LOG_FILE"

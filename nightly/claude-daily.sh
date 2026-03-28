@@ -3,6 +3,16 @@ VAULT_DIR="/mnt/c/Users/mirsi/OneDrive/Dokumenty/miro_vault/zettelkasten"
 DATE=$(date +%Y-%m-%d)
 YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
 LOG_FILE="/tmp/claude-daily-${DATE}.log"
+NTFY_URL="http://192.168.0.14/claude-agents"
+
+notify_failure() {
+  curl -sf -m 5 \
+    -H "Title: Daily Agent Failed" \
+    -H "Priority: high" \
+    -H "Tags: warning" \
+    -d "$1" \
+    "$NTFY_URL" 2>/dev/null || true
+}
 
 echo "=== Claude Daily Agent - ${DATE} ===" >> "$LOG_FILE"
 echo "Started: $(date)" >> "$LOG_FILE"
@@ -19,6 +29,11 @@ if ! powershell.exe -Command "Get-Process 'Docker Desktop' -ErrorAction Silently
     fi
     sleep 10
   done
+  if ! docker info &>/dev/null; then
+    echo "ERROR: Docker failed to start after 5 minutes" >> "$LOG_FILE"
+    notify_failure "Docker Desktop failed to start after 5 minutes. Daily agent cannot run. Check log: $LOG_FILE"
+    exit 1
+  fi
 fi
 
 # Start Edge with remote debugging if not running
@@ -93,8 +108,10 @@ You are a READ-ONLY agent for all external services. You gather information and 
 
 ### 7. Check Strava
 - Use browser MCP tools to navigate to Strava (https://www.strava.com/dashboard)
-- Browse the activity feed for recent rides, especially gravel rides around Kyoto
-- Highlight any notable gravel rides (distance, elevation, route) worth checking out
+- If a cookie consent dialog appears, click 'Reject Non-Essential' to dismiss it
+- Browse the activity feed for rides from OTHER people (not the user's own rides)
+- Focus on gravel rides around Kyoto from followed riders — note rider name, route name, distance, elevation, and location
+- The user's own recent rides are shown in the footer under 'Your Recent Activities' — you can mention those briefly but the main interest is what others are riding
 - REMINDER: READ ONLY — do not like, comment, or interact with activities
 
 ### 8. Check QMD Embedding Logs
@@ -103,18 +120,23 @@ You are a READ-ONLY agent for all external services. You gather information and 
 - If the log doesn't exist, it means the job didn't run (laptop was asleep at 3am) — add a task to the action plan: 'Run ~/qmd-embed.sh manually (nighttime embedding didn\\'t run)'
 
 ### 9. Prepare Draft Replies
-- For each important/urgent email identified in steps 4-5, write a draft reply in the daily note
-- For any LinkedIn messages that need a response, write a draft reply in the daily note
-- Format each draft clearly with the recipient, subject/context, and proposed reply text
+- Only draft replies for messages that actually need a response — skip newsletters, notifications, FYI messages, and anything purely informational
+- Draft replies for: actionable work emails, LinkedIn messages from recruiters or contacts, and any other messages that clearly need a response
+- Replies to ioLabs colleagues (email, Teams, etc.) must be written in Czech, unless an English speaker is also included in the conversation
+- Format each draft clearly with the recipient, channel/context, and proposed reply text
 - These are drafts ONLY — written to the Obsidian daily note for the user to review and send manually
 - Do NOT open any compose/reply UI in the browser
 
 ### 10. Check Sprint Planning Spreadsheet
-- Use browser MCP tools to navigate to the Sprint planning Google Sheet: https://docs.google.com/spreadsheets/d/1EmEU7Plb4jU64NTiJRipnmkGRfkkCrtNJI-zIM621i4/edit?gid=1171522968#gid=1171522968
-- Find today's date row and look for tasks assigned to Mira/Miroslav
-- Check for any mentions of Kirioll
-- Note planned tasks and deadlines
-- If the spreadsheet fails to load, skip this step and note it in the action plan
+- Navigate to the Sprint planning Google Sheet: https://docs.google.com/spreadsheets/d/1EmEU7Plb4jU64NTiJRipnmkGRfkkCrtNJI-zIM621i4/edit?gid=1171522968#gid=1171522968
+- The sheet 'Tasky - 2026' has dates as columns (d/m/yyyy in row 1, day names in row 2) and people as row sections. Each column is one calendar day (including weekends, which are empty).
+- **How to read it:** Do NOT try to scroll or use Ctrl+F in the Google Sheets UI — it is unreliable with Playwright. Instead:
+  1. Use browser_evaluate to fetch the CSV and save it to a temp file:
+     \`async () => { const r = await fetch('https://docs.google.com/spreadsheets/d/1EmEU7Plb4jU64NTiJRipnmkGRfkkCrtNJI-zIM621i4/export?format=csv&gid=1171522968'); const t = await r.text(); return t; }\`
+     Then write the returned text to /tmp/sprint-planning.csv using the Write tool.
+  2. Use Bash to run a Python script that parses /tmp/sprint-planning.csv with the csv module (which handles quoted multiline cells correctly). Find today's column by matching the d/m/yyyy date in row 0, then find the row starting with 'Mira' and extract the cell at today's column index ±3 days for context.
+- Look for tasks assigned to Mira/Miroslav and any Kirioll mentions
+- If the spreadsheet or export fails, skip this step and note it in the action plan
 
 ### 11. Write Daily Action Plan
 - Using obsidian_append_content (or write the file if empty), build today's daily note (daily/${DATE}.md) with this structure:
@@ -127,7 +149,7 @@ You are a READ-ONLY agent for all external services. You gather information and 
      - Strava highlights (notable gravel rides around Kyoto)
      - QMD embedding status (succeeded, failed, or didn't run)
      - Suggested action items for the day ordered by priority (include checking Toggl Track)
-  2. THEN: '## Draft Replies' heading with draft responses for important emails and LinkedIn messages (from step 9)
+  2. THEN: '## Draft Replies' heading with draft responses (from step 9) — only for messages that need a reply, in Czech for ioLabs colleagues
   3. THEN at the END of the file: the carried-forward task checklist (with original date headings preserved from step 2)
 
 ### 12. Send Slack Summary
@@ -137,7 +159,13 @@ You are a READ-ONLY agent for all external services. You gather information and 
 - Keep it brief — this is a notification, not the full brief" \
   --dangerously-skip-permissions \
   --output-format text \
-  --max-budget-usd 5 \
+  --max-budget-usd 10 \
   >> "$LOG_FILE" 2>&1
+
+CLAUDE_EXIT=$?
+if [ $CLAUDE_EXIT -ne 0 ]; then
+  echo "ERROR: Claude exited with code $CLAUDE_EXIT" >> "$LOG_FILE"
+  notify_failure "Daily agent exited with code $CLAUDE_EXIT (budget exceeded or crash). Check log: $LOG_FILE"
+fi
 
 echo "Finished: $(date)" >> "$LOG_FILE"
