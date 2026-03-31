@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export QMD_EMBED_MODEL="hf:Qwen/Qwen3-Embedding-0.6B-GGUF/Qwen3-Embedding-0.6B-Q8_0.gguf"
+
 REPO_DIR="/home/miro/zettelkasten"
 LOG_FILE="/tmp/zettelkasten-embed-$(date +%Y-%m-%d).log"
 QMD="/home/miro/.npm-global/bin/qmd"
