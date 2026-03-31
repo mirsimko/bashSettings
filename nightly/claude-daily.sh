@@ -40,7 +40,8 @@ fi
 if ! powershell.exe -Command "Get-Process msedge -ErrorAction SilentlyContinue" &>/dev/null; then
   echo "Starting Edge with remote debugging..." >> "$LOG_FILE"
   powershell.exe -Command "Start-Process 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe' -ArgumentList '--remote-debugging-port=9222','--remote-debugging-address=0.0.0.0','--remote-allow-origins=*'" &>/dev/null
-  sleep 5
+  echo "Waiting for Edge to fully start..." >> "$LOG_FILE"
+  sleep 15
 fi
 
 cd "$VAULT_DIR"
@@ -156,7 +157,14 @@ You are a READ-ONLY agent for all external services. You gather information and 
 - Use slack_post_message to send a concise summary to channel_id 'C0ACKPPTX2T' (#mcp-bot)
 - Include: weather, ALL calendar events listed with times, number of carried-forward tasks, top-priority emails, any LinkedIn messages, and the top 3 action items for the day
 - List every calendar event individually — this is the user's quick-glance schedule
-- Keep it brief — this is a notification, not the full brief" \
+- Keep it brief — this is a notification, not the full brief
+
+### Error handling: ntfy notification
+If you cannot complete all the tasks above (e.g. browser won't connect, services are down, login fails, page crashes, or you are running low on budget), send a notification to ntfy so the user knows:
+\`\`\`bash
+curl -sf -m 5 -H 'Title: Daily Agent Issue' -H 'Priority: high' -H 'Tags: warning' -d 'DESCRIPTION OF WHAT WENT WRONG' '${NTFY_URL}'
+\`\`\`
+Replace DESCRIPTION with a brief explanation of what failed and what was or wasn't completed. Always attempt this notification before exiting." \
   --dangerously-skip-permissions \
   --output-format text \
   --max-budget-usd 10 \

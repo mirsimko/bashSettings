@@ -39,7 +39,8 @@ fi
 if ! powershell.exe -Command "Get-Process msedge -ErrorAction SilentlyContinue" &>/dev/null; then
   echo "Starting Edge with remote debugging..." >> "$LOG_FILE"
   powershell.exe -Command "Start-Process 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe' -ArgumentList '--remote-debugging-port=9222','--remote-debugging-address=0.0.0.0','--remote-allow-origins=*'" &>/dev/null
-  sleep 5
+  echo "Waiting for Edge to fully start..." >> "$LOG_FILE"
+  sleep 15
 fi
 
 cd "$VAULT_DIR"
@@ -142,7 +143,14 @@ You are a READ-ONLY agent for the browser. You gather information from Codmon an
 - If it doesn't exist, create it with just the backlink
 
 ### Step 8: Notify on Slack
-- Post to Slack channel C0ACKPPTX2T: a one-line summary like 'Codmon record for ${DATE} added: [brief description of what Miharu did today]'" \
+- Post to Slack channel C0ACKPPTX2T: a one-line summary like 'Codmon record for ${DATE} added: [brief description of what Miharu did today]'
+
+### Error handling: ntfy notification
+If you cannot complete all the tasks above (e.g. browser won't connect, Codmon is down, login fails, page crashes, or you are running low on budget), send a notification to ntfy so the user knows:
+\`\`\`bash
+curl -sf -m 5 -H 'Title: Codmon Agent Issue' -H 'Priority: high' -H 'Tags: warning' -d 'DESCRIPTION OF WHAT WENT WRONG' '${NTFY_URL}'
+\`\`\`
+Replace DESCRIPTION with a brief explanation of what failed and what was or wasn't completed. Always attempt this notification before exiting." \
   --dangerously-skip-permissions \
   --output-format text \
   --max-budget-usd 2 \
