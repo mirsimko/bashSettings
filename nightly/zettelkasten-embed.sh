@@ -41,11 +41,21 @@ fi
 
 # Step 3: qmd embed
 log "STEP 3: qmd embed"
-if "$QMD" embed >> "$LOG_FILE" 2>&1; then
-    log "STEP 3: qmd embed succeeded"
-else
+EMBED_OUTPUT=$("$QMD" embed 2>&1) || {
+    echo "$EMBED_OUTPUT" >> "$LOG_FILE"
     notify_failure "STEP 3: FAILED - qmd embed failed (exit code $?)"
     exit 3
+}
+echo "$EMBED_OUTPUT" >> "$LOG_FILE"
+
+# Check for partial failures (qmd embed exits 0 even when chunks fail)
+FAILED_CHUNKS=$(echo "$EMBED_OUTPUT" | grep -oP '\d+ chunks? failed' || true)
+if [[ -n "$FAILED_CHUNKS" ]]; then
+    notify_failure "STEP 3: PARTIAL FAILURE - qmd embed completed but $FAILED_CHUNKS"
+    log "STEP 3: qmd embed completed with failures: $FAILED_CHUNKS"
+    exit 3
 fi
+
+log "STEP 3: qmd embed succeeded"
 
 log "=== Zettelkasten embed job completed successfully ==="
