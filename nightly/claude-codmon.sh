@@ -1,8 +1,17 @@
 #!/bin/bash
 VAULT_DIR="/mnt/c/Users/mirsi/OneDrive/Dokumenty/miro_vault/zettelkasten"
+SCRIPTS_DIR="/home/miro/dev/browser_automations"
 DATE=$(date +%Y-%m-%d)
 LOG_FILE="/tmp/claude-codmon-${DATE}.log"
 NTFY_URL="http://192.168.0.14/claude-agents"
+
+if [ -d "$SCRIPTS_DIR" ]; then
+  SCRIPTS_LIST=$(cd "$SCRIPTS_DIR" && find . -type f \
+    \( -name "*.py" -o -name "*.sh" -o -name "*.js" -o -name "*.mjs" -o -name "*.md" \) \
+    -not -path "./.git/*" | sort | sed 's|^\./||')
+else
+  SCRIPTS_LIST="(scripts directory not found at ${SCRIPTS_DIR})"
+fi
 
 notify_failure() {
   curl -sf -m 5 \
@@ -43,6 +52,9 @@ if ! powershell.exe -Command "Get-Process msedge -ErrorAction SilentlyContinue" 
   sleep 15
 fi
 
+SESSION_FILE="/tmp/claude-codmon-session-${DATE}.id"
+CLAUDE_JSON="/tmp/claude-codmon-output-${DATE}.json"
+
 cd "$VAULT_DIR"
 
 /usr/bin/claude -p "You are running as an automated Codmon nursery record extraction agent. Today is ${DATE}.
@@ -53,14 +65,40 @@ You are a READ-ONLY agent for the browser. You gather information from Codmon an
 
 **ALLOWED actions (exhaustive list):**
 - Browser: navigate, snapshot, screenshot, click (for navigation only), tabs, run_code — READ-ONLY browsing of parents.codmon.com
-- File system: Write/Edit files ONLY in 'Kids daily activity records/' directory and 'daily/${DATE}.md'
-- Bash: ONLY for non-destructive commands
+- File system: Write/Edit files in 'Kids daily activity records/', 'daily/${DATE}.md', and ${SCRIPTS_DIR}/ (see Script library section below)
+- Bash: ONLY for non-destructive commands (e.g. running scripts). No git commands.
 
 **FORBIDDEN actions:**
 - Do NOT send, reply, or interact with any messaging service
 - Do NOT fill in any forms or input boxes on Codmon
-- Do NOT modify any vault file other than those in 'Kids daily activity records/' and 'daily/${DATE}.md'
+- Do NOT modify any vault file other than those in 'Kids daily activity records/' and 'daily/${DATE}.md' (writing to ${SCRIPTS_DIR}/ is allowed and encouraged)
+- Do NOT run any git commands. The wrapper auto-commits ${SCRIPTS_DIR}/ after you exit.
 - Do NOT execute destructive bash commands
+
+## MCP Server Readiness
+
+Before starting tasks, check if the MCP Docker gateway is connected by calling any MCP tool (e.g. browser_snapshot or slack_list_channels). Based on the result:
+
+- **MCP is ready:** Proceed with all tasks.
+- **MCP is NOT ready:** Sleep 2 minutes (\`sleep 120\` via Bash) and check MCP again.
+  - If MCP is now ready: proceed with all tasks.
+  - If MCP is still not ready: send an ntfy notification describing the problem and exit. Do NOT retry again.
+
+## Script library
+
+You have a shared, version-controlled script library at ${SCRIPTS_DIR}/. It is meant to grow and improve across runs. Reuse over re-derivation; save what's worth saving; never run git yourself.
+
+**Currently available scripts (relative to ${SCRIPTS_DIR}/):**
+\`\`\`
+${SCRIPTS_LIST}
+\`\`\`
+
+**How to use it:**
+1. **Reuse first.** Before writing a new browser_evaluate snippet, JP→EN translation table, or DOM extractor, scan the listing above. Codmon-specific scripts live under \`codmon/\`. If something fits, Read it to confirm its interface, then use it.
+2. **Save new reusable code.** The \`browser_evaluate\` snippet for picking the right activity-record card (the \`spans = document.querySelectorAll('span.more')\` loop) is a perfect candidate to save as \`codmon/extract-activity-card.js\` and parameterise on date. Same for translation tables (teacher names, meal statuses) — save them to \`codmon/translations.json\` or similar.
+3. **Fix bugs in place.** If a saved selector breaks because Codmon's DOM changed, fix the saved script.
+4. **Do NOT run git.** The wrapper auto-commits ${SCRIPTS_DIR}/ after you exit.
+5. **Use /tmp/ only for ephemeral data files.** Long-lived code goes in ${SCRIPTS_DIR}/.
 
 ## Task: Extract today's Codmon nursery records
 
@@ -151,15 +189,39 @@ If you cannot complete all the tasks above (e.g. browser won't connect, Codmon i
 curl -sf -m 5 -H 'Title: Codmon Agent Issue' -H 'Priority: high' -H 'Tags: warning' -d 'DESCRIPTION OF WHAT WENT WRONG' '${NTFY_URL}'
 \`\`\`
 Replace DESCRIPTION with a brief explanation of what failed and what was or wasn't completed. Always attempt this notification before exiting." \
-  --dangerously-skip-permissions \
-  --output-format text \
+  --permission-mode auto \
+  --output-format json \
   --max-budget-usd 2 \
-  >> "$LOG_FILE" 2>&1
+  > "$CLAUDE_JSON" 2>> "$LOG_FILE"
 
 CLAUDE_EXIT=$?
+
+# Extract and save session ID for resumability
+python3 -c "import json,sys; d=json.load(open(sys.argv[1])); print(d.get('session_id',''))" "$CLAUDE_JSON" > "$SESSION_FILE" 2>/dev/null
+SESSION_ID=$(cat "$SESSION_FILE" 2>/dev/null)
+echo "Session ID: ${SESSION_ID}" >> "$LOG_FILE"
+
+# Log the result text
+python3 -c "import json,sys; d=json.load(open(sys.argv[1])); print(d.get('result',''))" "$CLAUDE_JSON" >> "$LOG_FILE" 2>/dev/null
+
 if [ $CLAUDE_EXIT -ne 0 ]; then
   echo "ERROR: Claude exited with code $CLAUDE_EXIT" >> "$LOG_FILE"
-  notify_failure "Codmon agent exited with code $CLAUDE_EXIT (budget exceeded or crash). Check log: $LOG_FILE"
+  notify_failure "Codmon agent exited with code $CLAUDE_EXIT (budget exceeded or crash). Session: ${SESSION_ID}. Check log: $LOG_FILE"
+fi
+
+# Auto-commit any scripts the agent saved or modified.
+# Done outside the agent so it never burns budget on git operations.
+if [ -d "$SCRIPTS_DIR/.git" ]; then
+  if [ -n "$(git -C "$SCRIPTS_DIR" status --porcelain 2>/dev/null)" ]; then
+    git -C "$SCRIPTS_DIR" add -A >> "$LOG_FILE" 2>&1
+    git -C "$SCRIPTS_DIR" commit -m "auto: claude-codmon ${DATE}" >> "$LOG_FILE" 2>&1 \
+      && echo "Committed script changes in $SCRIPTS_DIR" >> "$LOG_FILE" \
+      || echo "WARNING: git commit failed in $SCRIPTS_DIR" >> "$LOG_FILE"
+  else
+    echo "No script changes to commit in $SCRIPTS_DIR" >> "$LOG_FILE"
+  fi
+else
+  echo "WARNING: $SCRIPTS_DIR is not a git repo; skipping auto-commit" >> "$LOG_FILE"
 fi
 
 echo "Finished: $(date)" >> "$LOG_FILE"
