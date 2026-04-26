@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export QMD_EMBED_MODEL="hf:Qwen/Qwen3-Embedding-0.6B-GGUF/Qwen3-Embedding-0.6B-Q8_0.gguf"
+
+REPO_DIR="/home/miro/zettelkasten"
+LOG_FILE="/tmp/zettelkasten-embed-$(date +%Y-%m-%d).log"
+QMD="/home/miro/.npm-global/bin/qmd"
+NTFY_URL="http://localhost/zettelkasten-embed"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+notify_failure() {
+    log "$1"
+    curl -s -H "Title: zettelkasten-embed failed" -H "Priority: high" -H "Tags: x" -d "$1" "$NTFY_URL" > /dev/null 2>&1
+}
+
+log "=== Starting zettelkasten embed job ==="
+
+# Step 1: git pull
+log "STEP 1: git pull"
+cd "$REPO_DIR"
+if git pull origin main >> "$LOG_FILE" 2>&1; then
+    log "STEP 1: git pull succeeded"
+else
+    notify_failure "STEP 1: FAILED - git pull failed (exit code $?)"
+    exit 1
+fi
+#
+# Step 3: qmd update
+log "STEP 2: qmd eupdate"
+if "$QMD" update >> "$LOG_FILE" 2>&1; then
+    log "STEP 2: qmd update succeeded"
+else
+    notify_failure "STEP 2: FAILED - qmd update failed (exit code $?)"
+    exit 2
+fi
+
+
+# Step 3: qmd embed
+log "STEP 3: qmd embed"
+EMBED_OUTPUT=$("$QMD" embed 2>&1) || {
+    echo "$EMBED_OUTPUT" >> "$LOG_FILE"
+    notify_failure "STEP 3: FAILED - qmd embed failed (exit code $?)"
+    exit 3
+}
+echo "$EMBED_OUTPUT" >> "$LOG_FILE"
+
+# Check for partial failures (qmd embed exits 0 even when chunks fail)
+FAILED_CHUNKS=$(echo "$EMBED_OUTPUT" | grep -oP '\d+ chunks? failed' || true)
+if [[ -n "$FAILED_CHUNKS" ]]; then
+    notify_failure "STEP 3: PARTIAL FAILURE - qmd embed completed but $FAILED_CHUNKS"
+    log "STEP 3: qmd embed completed with failures: $FAILED_CHUNKS"
+    exit 3
+fi
+
+log "STEP 3: qmd embed succeeded"
+
+log "=== Zettelkasten embed job completed successfully ==="
