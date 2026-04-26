@@ -49,6 +49,7 @@ alias exot='exit'
 # More aliases
 alias root='root -l'
 alias markdown='pandoc'
+alias cy='claude --dangerously-skip-permissions'
 
 alias vtkpython='vtk6python'
 
@@ -61,6 +62,7 @@ alias hackycarky="fabric -sp hacky_carky"
 alias translate-to-czech="fabric -sp translate -v lang_code:cs-cz"
 alias translate-to-english="fabric -sp translate -v lang_code:us-en"
 alias translate-to-japanese="fabric -sp translate -v lang_code:ja-jp"
+alias humanize="fabric -sp humanize"
 
 # Add ~/bin to $PATH
 PATH=$PATH:~/bin
