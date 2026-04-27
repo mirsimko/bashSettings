@@ -25,6 +25,10 @@ sudo npm update -g codebuff
 echo "Updating OpenCode..."
 sudo npm update -g opencode-ai
 
+# Update Pi
+echo "Updating Pi..."
+sudo npm update -g @mariozechner/pi-coding-agent
+
 # Update Context Hub
 echo "Updating Context Hub..."
 sudo npm update -g @aisuite/chub
