@@ -50,6 +50,7 @@ alias exot='exit'
 alias root='root -l'
 alias markdown='pandoc'
 alias cy='claude --dangerously-skip-permissions'
+alias cxy='codex --yolo'
 
 alias vtkpython='vtk6python'
 

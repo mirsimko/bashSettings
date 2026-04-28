@@ -1,18 +1,100 @@
 # bashSettings
-Settings of aliases, vim, etc.
 
-## How to install vim plugins
+Personal shell, terminal, Vim, and Neovim configuration.
+
+## Installation
 
 ```bash
 $ git clone https://github.com/mirsimko/bashSettings.git
+$ cd bashSettings
 ```
-Copy `.vimrc` and `.vim` to the home directory
 
-in your home run:
+The setup script always links the shell config (`~/.mybashrc`) and `~/bin`.
+Choose which editor config to install with `--editor`.
+
+### Classic Vim
+
 ```bash
-$ cd .vim
-$ ./setupVim.sh
+$ ./setupBashAndVim.sh --editor vim
 ```
+
+This links `~/.vimrc`, copies `.vim`, and runs the Vundle-based Vim plugin
+installer when Vundle is not already present.
+
+### Neovim
+
+```bash
+$ ./setupBashAndVim.sh --editor nvim
+```
+
+This links:
+
+```text
+~/.config/nvim -> ~/bashSettings/.config/nvim
+```
+
+The Neovim setup bootstraps `lazy.nvim` automatically and installs the migrated
+Vim plugins plus `codex.nvim`.
+
+If `nvim` is missing on Ubuntu, install it first:
+
+```bash
+$ sudo snap install nvim --classic
+```
+
+### Vim and Neovim
+
+```bash
+$ ./setupBashAndVim.sh --both
+```
+
+### Codex in Neovim
+
+The Neovim setup includes `rhart92/codex.nvim`. Default mappings:
+
+```text
+,cc  Toggle Codex
+,cs  Send visual selection to Codex
+```
+
+The plugin runs the existing `codex` CLI from inside Neovim. It does not add Vim
+mode to the Codex CLI prompt itself.
+
+The Codex window is a Neovim terminal buffer. To leave terminal input mode:
+
+```text
+Esc Esc
+```
+
+When the terminal is in normal mode, the buffer is intentionally not editable.
+If you see `E21: Cannot make changes, 'modifiable' is off`, go back to terminal
+input mode:
+
+```text
+i
+Enter
+,ti
+```
+
+Window navigation works from normal buffers and from the Codex terminal:
+
+```text
+Alt-h  Move to the left window
+Alt-j  Move to the lower window
+Alt-k  Move to the upper window
+Alt-l  Move to the right window
+```
+
+From inside the Codex terminal, these also work:
+
+```text
+Ctrl-w h  Move to the left window
+Ctrl-w j  Move to the lower window
+Ctrl-w k  Move to the upper window
+Ctrl-w l  Move to the right window
+Ctrl-w Ctrl-w  Cycle windows
+```
+
 ## To load `.Xresources` (config for xterm)
 
 ```bash
