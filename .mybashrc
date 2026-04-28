@@ -51,6 +51,7 @@ alias root='root -l'
 alias markdown='pandoc'
 alias cy='claude --dangerously-skip-permissions'
 alias cxy='codex --yolo'
+alias vim='nvim'
 
 alias vtkpython='vtk6python'
 
@@ -72,8 +73,8 @@ PATH=$PATH:~/bin
 export IGNOREEOF=5
 
 # default editor
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 
 set -o vi
