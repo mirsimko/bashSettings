@@ -5,10 +5,6 @@
 
 echo "Starting AI tools update..."
 
-# Update Gemini CLI
-echo "Updating Gemini CLI..."
-sudo npm update -g @google/gemini-cli
-
 # Update Codex
 echo "Updating Codex..."
 sudo npm update -g @openai/codex
@@ -23,7 +19,7 @@ sudo npm update -g opencode-ai
 
 # Update Pi
 echo "Updating Pi..."
-sudo npm update -g @mariozechner/pi-coding-agent
+sudo npm update -g @earendil-works/pi-coding-agent
 
 # Update Context Hub
 echo "Updating Context Hub..."
