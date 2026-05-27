@@ -5,10 +5,6 @@
 
 echo "Starting AI tools update..."
 
-# Update Codex
-echo "Updating Codex..."
-sudo npm update -g @openai/codex
-
 # Update Codebuff
 echo "Updating Codebuff..."
 sudo npm update -g codebuff
