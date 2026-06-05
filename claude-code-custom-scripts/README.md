@@ -19,13 +19,36 @@ at the end of every response — a lightweight, Codex-style "changed files" pane
   2. `$CLAUDE_DIFFSTAT_WIDTH` — an explicit override you can set in settings `env`;
   3. `72` — a conservative default that fits an 80-column terminal.
 
+## statusline-command.sh
+
+The bottom status bar, rendered as a single coloured line:
+
+```
+ctx: 4% (41k/1000k)  |  Opus 4.8 (1M context)  |  owner.name  |  branch  |  5h: 15% (→12:50)  |  wk: 4% (→Sat 04:00)
+```
+
+- Reads the `statusLine` JSON Claude Code pipes in on stdin; parses it with `python3`.
+- `ctx` shows used context as a percentage and `usedk/sizek`, coloured green/yellow/red
+  by how full the window is.
+- The project label is `owner.name` from the workspace repo info, falling back to the
+  `git remote origin` owner/name, then to the working-directory basename. The git
+  branch is appended after it.
+- `5h` / `wk` show the Pro/Max rate-limit windows with their reset times; they only
+  appear once the first API response has reported them.
+
 ## Install
 
 ```bash
-./install.sh
+./install.sh            # diff-stat Stop hook
+./install-statusline.sh # statusline
 ```
 
-This soft-links `diff-stat.sh` into `~/.claude/hooks/` (so `git pull` updates the live
-hook) and registers the `Stop` hook in `~/.claude/settings.json`. It is idempotent and
-backs up anything it replaces. Set `CLAUDE_CONFIG_DIR` to target a non-default config
-dir. Start a new Claude Code session (or open `/hooks` once) afterwards to load it.
+`install.sh` soft-links `diff-stat.sh` into `~/.claude/hooks/` and registers the `Stop`
+hook in `~/.claude/settings.json`.
+
+`install-statusline.sh` soft-links `statusline-command.sh` into `~/.claude/` and registers
+the `statusLine` key in `~/.claude/settings.json`.
+
+Both soft-link from this repo (so `git pull` updates the live script), are idempotent, and
+back up anything they replace. Set `CLAUDE_CONFIG_DIR` to target a non-default config dir.
+Start a new Claude Code session afterwards to load the change.
