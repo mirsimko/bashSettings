@@ -67,14 +67,11 @@ alias translate-to-japanese="fabric -sp translate -v lang_code:ja-jp"
 alias humanize="fabric -sp humanize"
 
 # Add ~/bin to $PATH
-PATH=$PATH:~/bin
+PATH="$PATH:$HOME/bin"
 
 # protection on accidental closing of the terminal
 export IGNOREEOF=5
 
-# default editor
-export EDITOR='nvim'
-export VISUAL='nvim'
 
 
 set -o vi
