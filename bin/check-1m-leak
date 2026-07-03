@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""Ground-truth check for the 'displayed 200k but really 1M' bug.
+
+The status bar / /context can't be trusted: CLAUDE_CODE_DISABLE_1M_CONTEXT
+clamps the *displayed* window to 200k even when the API is serving 1M.
+But a transcript can't lie: a session whose effective context (input +
+cache_read + cache_creation) exceeds ~200k tokens MUST have been on a 1M
+window. This scans every recorded session and flags those.
+
+Usage:  check-1m-leak [days]      # default: all sessions; days = look-back filter
+"""
+import json, glob, os, sys, collections, datetime
+
+THRESHOLD = 215_000  # a hair above 200k to avoid rounding false positives
+cutoff = None
+if len(sys.argv) > 1:
+    cutoff = (datetime.datetime.now() - datetime.timedelta(days=float(sys.argv[1]))).strftime("%Y-%m-%d")
+
+rows = []
+for fp in glob.glob(os.path.expanduser("~/.claude/projects/*/*.jsonl")):
+    peak = 0; model = ""; date = ""
+    try:
+        f = open(fp, errors="replace")
+    except Exception:
+        continue
+    with f:
+        for line in f:
+            if '"usage"' not in line:
+                continue
+            try:
+                d = json.loads(line)
+            except Exception:
+                continue
+            msg = d.get("message") or {}
+            u = msg.get("usage") or {}
+            tot = ((u.get("input_tokens") or 0)
+                   + (u.get("cache_read_input_tokens") or 0)
+                   + (u.get("cache_creation_input_tokens") or 0))
+            m = msg.get("model")
+            if m and m != "<synthetic>" and tot > peak:
+                peak, model, date = tot, m, (d.get("timestamp") or "")[:10]
+    if peak and (cutoff is None or date >= cutoff):
+        rows.append((peak, date, model, os.path.basename(fp)))
+
+rows.sort(reverse=True)
+leaks = [r for r in rows if r[0] > THRESHOLD]
+
+scope = f"last {sys.argv[1]} days" if cutoff else "all time"
+print(f"Scanned {len(rows)} sessions ({scope}).")
+if leaks:
+    print(f"\n  *** {len(leaks)} session(s) EXCEEDED 200k -> were on a 1M window: ***")
+    for peak, date, model, name in leaks:
+        print(f"  {peak:>9,}  {date}  {model}  {name}")
+else:
+    print("\n  OK: no session exceeded 200k. No 1M leak detected in this window.")
+
+if rows:
+    peak, date, model, name = rows[0]
+    print(f"\n  Highest peak: {peak:,} tokens  ({date}, {model})")
